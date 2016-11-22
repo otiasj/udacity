@@ -1,0 +1,356 @@
+UNIT 1 : Localisation
+(Monte Carlo localization)
+On utilise les probabilites pour localiser le vehicule.
+En faisant une succession de mouvement et de mesures, 
+on peut estimer la position la plus probable du vehicule.
+
+On utilise bayes rule pour la detection. (un produit)
+On utilise la loi de probabilitee totale,
+pour le deplacement.(une convolution=Addition)
+
+une detection ameliore la probabilite de positionnement,
+un mouvement reduit cette probabilitee.
+
+Notes de cours
+p(X) = proba d avoir un cancer
+P(C) 0.001
+P(!C) 0.999
+
+p(Z) = proba d avoir un test positif en ayant un cancer
+p(POS|C) = 0.8
+p(POS|!C) = 0.1
+
+P(C|POS)= P(POS|C) P(C) / a
+a = SUM P(C)
+
+0.8 * 0.001 = 0.0008
+
+a = p(POS|C) p(C) + P(POS|!C) p(!C) = 0.8 * 0.001 + 0.1 * .999
+0.0008 / 0.1007 = 0.0079
+
+
+p(C|POS) = P(POS|C) P(C) / P(POS)
+
+p(POS) = P(POS|C) * 0.001 + P(POS|!C) * 0.999
+
+P(A) = SUM P(A|B) P(B)
+P(A) = 0.5 * 0.5
+
+P(H|Fair) = 0.5
+P(H|Load) = 0.1
+
+p(H) = P(H/Fair) * P(Fair) + P(H/Load) * P(Load)
+     = 0.5 * 0.5 + 0.1 * 0.5
+     = 0.3
+
+
+p(Fair|H) = P(H|Fair) * P(Fair) / a
+
+P(Y) = SUM P(Y|X) P(X)
+       0.6 * 0.2 + 0.6 * 0.2
+
+
+p(H) = P(H|T) P(T) = 0.5 * 0.5
+
+
+P(Fair|H) = P(H|Fair) * P(Fair) / a
+a = P(H|Fair) * P(Fair) + P(H|Load) * P(Load)
+
+= 0.5 * 0.5 / 0.5 * 0.5 + 0.1 * 0.5
+= 0.25 / 0.25 + 0.05
+
+Formules :
+Bayes rule
+P(A|B) = (P(B|A) P(A)) / a
+a = somme des probabilites
+
+Total probability
+P(A) = SUMonB of (P(A|B) P(B))
+
+HomeWork :
+0.8
+0.04
+
+P(Y) = P(Y|X) P(X) + P(Y|!X) P(!X)
+     =  0.6 * 0.2 + 0.6 * 0.8
+     = .12 + .48
+     = 0.6
+
+
+Localization & memory
+1 dimension => 1d array
+2 dimensions => 2d array 
+3 dimensions => 3d array
+6 dimensions => 6d array
+
+Bayes Rule
+P(F) = 0.001
+P(!F) = 0.999
+
+P(B|!F) = 0.1
+P(B|F) = 0.9
+
+1) P-(F|B) = P(B|F) P(F) = 0.9 * 0.001 = 0.0009
+2) P- (!F|B) = P(B|!F) p(!F) = 0.1 * 0.999 = 0.0999
+a = SUM 1 & 2 = 0.1008
+P(F|B) = P-(F|B) / a = 0.0009 / 0.1008 = 0.0089
+P(!F|B) = p-(F|B) / a = 0.0999 / 0.1008 = 0.9910
+
+
+Programming :
+[0,0] = no move
+[0,1] = right
+[0,-1] = left
+[1,0] = down
+[-1,0] = up
+
+sensor_right = 1.0
+p_move = 1.0
+
+read the colors
+uniforme distribution in start
+then motion first, mesure motion xtimes
+display the final distribution
+
+UNIT 2 : Tracking
+
+Kalman Filter : pour predire un mouvement
+Utilisee pour predire le nouvement d autre vehicule,
+on estime leur velocite en prenant des mesures concecutives
+de distances.
+
+On utilise des produits de gaussiennes pour faire les predictions
+
+Notes de cours:
+On utilise les gaussiennes pour exprimer une probabilite.
+l aire totale sous la gaussienne est egale a 1.
+une gaussienne est definie par son milieu(=mean)=mu 
+et son ecart(variance)=sigma au carre
+Sigma va represente l incertitude, 
+plus sigma est grand, plus la gaussienne et large,
+moins la position est exacte.
+
+La formule d une gaussienne est donne par la formule :
+F(X) =1/sqrt(2.*pi*sigma2) * exp(-.5*(x-mu)**2 / sigma2)
+la partie avant l exp est utilisee pour la normalisation
+
+Lors de la prise de mesures on multiplie les gaussiennes.
+la gaussienne representant l etat actuel,
+par la gaussienne du capteur.
+On obtient une gaussienne a la variance plus faible,
+donc a la certitude de position plus elevee.
+la position du milieu de la nouvelle gaussienne va etre
+plus proche du milieu de la gaussienne ayant la plus petite variance.
+cad la gaussienne ayant le plus de certitude.
+
+=== DANS UN MONDE en 1D :
+Measurement update: 
+Une multiplication de 2 gaussienne :
+dont le nouvel ecart et le nouveau milieu :
+    new_mean = (1/(var1 + var2))*(var2*mean1+var1*mean2)
+    new_var = 1/((1/var1)+(1/var2))
+
+La prediction de mouvement est donne par une simple addition :
+des 2 gaussiennes :
+On additionne la gaussienne de l etat actuel,
+et la gaussienne du mouvement.
+    new_mean = mean1 + mean2
+    new_var = var1 + var2
+===
+
+Dans un monde 2d:
+X et Y represente le milieu (mean= mu)
+l ecart represent l aire autour de X, Y
+un peu comme une montagne en 3d,
+le centre a la base de la montagne serait le milieu
+la circonference de la montagne serait l ecart.
+un rond represente une certitude egale sur x et y
+un ovale permet d evaluer une "direction" sur x, y
+
+On peu calculer la vitesse d un objet juste en ayant
+les positions d un objet.
+Par example :
+soit un axe X representant la position
+et un axe y representatn la vitesse
+connaissant la position d un objet mais pas sa vitesse,
+on va avoir une gaussienne tres allongee parallele a l axe Y
+(car on ne connait pas la vitesse)
+a t2 idem,
+mais en multipliant les donnes connues on va pouvoir deduire la vitesse d un objet.
+
+Dans le cas d une gaussienne multivariable,
+le milieu est represente par une matrix 1 colonne
+la variance est ici appelle covariance et est representee par une matrice.
+
+
+state: state transition fonction
+measurement function
+X'= X + X. 
+X. la velocite
+X l ancienne position
+X' la nouvelle position
+
+X'    1 1  X
+X.' = 0 1  X.
+       F
+         X
+Z = 1 0  X.
+     H
+
+Update function :
+prediction step : X' = F X + u
+X = estimate
+F = state transition matrix
+U = motion vector
+
+Certainty : P' = F P Ft
+Ft transposition
+
+measurement step: 
+Z = measurement
+H = measurement Function
+measurement update :
+Y = Z - H X
+Y = error
+
+S = H P Ht +R
+R= noise
+K= kalman gain
+K= P Ht S.exp(-1)
+X' = X + (K y)
+P' = (I - K H)P
+
+eg :
+2d vertical matrix :
+a = matrix([[10.], [10.]])
+a.show() => print
+a.transpose -> horizontal matrix
+
+measurement update then motion update
+
+X = 0.99 position
+    0.0 velocity unknown
+
+Uncertaintity P updated 
+P = 1000.9999
+1000 1000.0
+
+X = 2.99
+    0.99
+
+X = 3.999
+    0.999
+
+P certainty 
+2.33 0.99
+0.99 
+
+
+Homework :
+3. A chercher Heavytail gaussian
+Not possible
+
+4. Dimension of the state vector,
+quand X -> X et X. (pour la position plus velocite)
+quand X, Y ? X, X. Y, Y. (pour la position et la velocite X et Y)
+probablement 4 dimensionnal state vector (donne dans la question suivante) le premier avait 2 state variable
+
+5. F prediction function
+X
+Y
+X.
+Y.
+
+X' = X + 0Y + X.  + 0Y.
+Y' =0X + Y  + 0X. + Y.
+X. =0X + 0Y + X.  + 0Y
+Y. =0X + 0Y + 0X. + Y.
+
+1 0 X. 0
+0 1 0  Y.
+0 0 1  0
+0 0 0  1
+
+6. program the kalman filter for 2 dimensions
+P = # initial uncertainty X = Y= 0 covariance= 1000
+F = question 5 # next state function
+H = # measurement function 
+R = matrix([[0.1, 0.], [0., 0.1]]) # measurement uncertainty 2x2 
+I = matrice identite
+
+
+R = 0.1 0?
+    0?   0.1 
+
+Measurement H : # measurement function
+X   1 0 0 0    X
+Y   0 1 0 0    Y
+               X.
+               Y.
+
+UNIT 3 : particules filters
+On cree des particules aleatoirement avec les memes etats que le robot,
+Plus un poid qui represente la probabilite que le robot soit pret de cette particule
+
+Resampling :
+On normalise les poids, en divisant chaque poid par la somme des poids -> alpha
+Puis on tire aleatoirement N particules, ou N est le nombre de particules, en utilisant alpha.
+
+A chaque resampling on perd des particules, car les particules ayant la plus haute probabilitee seront choisies plus souvent.
+
+Pour choisir des particules selon leur probabilites, on utilise une resampling wheel
+Resampling wheel :
+p3 = []
+B= 0
+index = random.randint(0, N-1)
+for i in range(N):
+    B = B + random.random() * 2 * wmax
+    if (w[index] < B):
+        B = B - w[index]
+        index = (index + 1) % N
+    else:
+        p3.append(w[index])
+
+But this resampling only care about position not about orientation
+Mais en refaisant plusieur mouvement et resampling, l orientation va commencer a compter.
+
+Enfin parmis le champ de particule on calcule la distance pour savoir la qualite de la solution.
+
+
+Homework :
+1 proba 
+N Particules dans 4 cases
+probabilite que 0 particules soit dans la premiere case
+0.75^4
+
+2 proba
+
+5 3
+3 1
+
+3 in case of just one particle
+4 move function
+5 sense function
+6 combined move and sense with gaussian approximation
+
+
+Mouvement d une voiture : x,y,t 
+t = teta orientation
+a = alpha steering angle
+d = distance
+L = Longueur entre le pneu avant et arriere
+B = beta angle de virage
+
+B = d/L * tan(a)
+R = d/B
+cx = x - sin(t) * R
+cy = y + cos(t) * R
+x' = cx + sin(t+B) * R
+y' = cy - cos(t+B) * R
+t' = (t + B) % 2*pi
+
+if B < 0.001  (ligne droite)
+x' = x + d * cos(t)
+y' = y + d * sin(t)
+t' = (t + B) % 2*pi
+
