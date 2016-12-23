@@ -10,7 +10,7 @@ This document explains the development process, testing and results.
 
 The goal of this game is to escape the dungeon by repeating the pattern of Orbs lighting up.
 
-<a href="https://youtu.be/RhPmb2DC6qI" alt="Project4Puzzler Video" target="_blank"><img src="https://github.com/otiasj/udacity/blob/master/VR/p4/docs/img3.png" alt="Project4Puzzler video" width="560">
+<a href="https://youtu.be/RhPmb2DC6qI" alt="Project4Puzzler Video" target="_blank"><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/img3.png" alt="Project4Puzzler video" width="560">
 
 ##Design process
 
@@ -37,8 +37,8 @@ She likes games but has never tried anything on VR.
 
 Here are a few quick sketches to illustrate the concept of the game.
 
-<img src="https://github.com/otiasj/udacity/blob/master/VR/p4/docs/img1.jpg" alt="Overall Design Sketch" width="300">
-<img src="https://github.com/otiasj/udacity/blob/master/VR/p4/docs/img2.jpg" alt="Overall Design Sketch" width="300">
+<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/img1.jpg" alt="Overall Design Sketch" width="300">
+<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/img2.jpg" alt="Overall Design Sketch" width="300">
 
 ###User testing outcomes and iteration
 
