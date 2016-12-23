@@ -11,6 +11,7 @@ This document explains the development process, testing and results.
 The goal of this game is to escape th%e dungeon by repeating the pattern of Orbs lighting up.
 
 <a href="https://youtu.be/RFXElq1QyFo" alt="Project4Puzzler Video" target="_blank"><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/img3.png" alt="Project4Puzzler video" width="560">
+<br>Click to watch a Walkthrough Video</a>
 
 ##Design process
 
@@ -63,21 +64,21 @@ To address the second comment I feel it would require a lot more effort and woul
 ##Breakdown of the final application
 
 Here are few screenshots of the result of the project.
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss1.png" alt="screenshot" width="300">
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss2.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss1.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss2.png" alt="screenshot" width="300">
 
 After clicking the start button, the user is moved automatically inside the dungeon.
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss3.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss3.png" alt="screenshot" width="300">
 
 The orbs start to animate following a pattern of light and sound.
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss4.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss4.png" alt="screenshot" width="300">
 
 The user repeats the pattern by clicking on the orbs.
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss5.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss5.png" alt="screenshot" width="300">
 
 After successfully repeating the correct pattern, the user is moved outside of the dungeon, through the second door.
 
-<img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss6.png" alt="screenshot" width="300">
+<BR><img src="https://github.com/otiasj/udacity/blob/master/VR/P4/docs/ss6.png" alt="screenshot" width="300">
 
 The restart panel is then showed. If the user clicks the restart button, the user is moved back in front of the orb to complete the puzzle again.
 
@@ -91,7 +92,7 @@ The demo only last a minute or two which is perfect for first time users.
 
 As a next iteration, it would be fun to add the Daydream controller as an input device.
 
-The controller feels more intuitive then clicking while looking and it might improve the usability.
+The controller feels more intuitive than clicking while looking and it might improve the usability.
 
 ###Link to additional work
 
