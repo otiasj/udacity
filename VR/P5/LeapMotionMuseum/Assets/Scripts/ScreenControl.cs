@@ -13,7 +13,10 @@ public class ScreenControl : MonoBehaviour {
     bool faded;
     Renderer myRenderer;
     public AudioSource audioSource;
+    public AudioClip audioclip;
     public GameObject[] objectsToTrigger;
+
+    private MovieTexture texture;
 
     // Use this for initialization
     void Start()
@@ -21,12 +24,17 @@ public class ScreenControl : MonoBehaviour {
         myRenderer = GetComponent<Renderer>();
         solidColor = myRenderer.material.color;
         fadedColor = new Color(solidColor.r, solidColor.g, solidColor.b, 0f);
-        for (int i = 0; i < objectsToTrigger.Length; i++)
+        if (objectsToTrigger != null)
         {
-            objectsToTrigger[i].SetActive(false);
+            for (int i = 0; i < objectsToTrigger.Length; i++)
+            {
+                objectsToTrigger[i].SetActive(false);
+            }
         }
+
+        texture = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
     }
-	
+
     public void Play()
     {
         fading = true;
@@ -35,7 +43,15 @@ public class ScreenControl : MonoBehaviour {
         {
             objectsToTrigger[i].SetActive(true);
         }
+        if (audioclip != null)
+        {
+            audioSource.clip = audioclip;
+        }
         audioSource.Play();
+        if (texture != null)
+        {
+            texture.Play();
+        }
     }
 
     public void Pause()
@@ -47,5 +63,9 @@ public class ScreenControl : MonoBehaviour {
             objectsToTrigger[i].SetActive(false);
         }
         audioSource.Stop();
+        if (texture != null)
+        {
+            texture.Stop();
+        }
     }
 }
