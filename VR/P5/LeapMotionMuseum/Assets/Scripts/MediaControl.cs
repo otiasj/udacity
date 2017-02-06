@@ -59,7 +59,10 @@ public class MediaControl : MonoBehaviour, Callback {
             if (screens[currentIndex].GetComponent<Renderer>() != null)
             {
                 texture = (MovieTexture)screens[currentIndex].GetComponent<Renderer>().material.mainTexture;
-                texture.Play();
+                if (texture != null)
+                {
+                    texture.Play();
+                }
             } else
             {
                 screenControl = screens[currentIndex].GetComponent<ScreenControl>();
