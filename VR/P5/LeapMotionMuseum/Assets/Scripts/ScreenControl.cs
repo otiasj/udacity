@@ -6,12 +6,6 @@ using UnityEngine;
 
 public class ScreenControl : MonoBehaviour {
 
-    public float fadeTime = 1f;
-    Color solidColor;
-    Color fadedColor;
-    bool fading;
-    bool faded;
-    Renderer myRenderer;
     public AudioSource audioSource;
     public AudioClip audioclip;
     public GameObject[] objectsToTrigger;
@@ -21,9 +15,6 @@ public class ScreenControl : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
-        myRenderer = GetComponent<Renderer>();
-        solidColor = myRenderer.material.color;
-        fadedColor = new Color(solidColor.r, solidColor.g, solidColor.b, 0f);
         if (objectsToTrigger != null)
         {
             for (int i = 0; i < objectsToTrigger.Length; i++)
@@ -32,12 +23,14 @@ public class ScreenControl : MonoBehaviour {
             }
         }
 
-        texture = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
+        if (GetComponent<Renderer>() != null)
+        {
+            texture = (MovieTexture)GetComponent<Renderer>().material.mainTexture;
+        }
     }
 
     public void Play()
     {
-        fading = true;
         Debug.Log("PLAY!");
         for (int i = 0; i < objectsToTrigger.Length; i++)
         {
@@ -57,7 +50,6 @@ public class ScreenControl : MonoBehaviour {
     public void Pause()
     {
         Debug.Log("PAUSE...");
-        fading = false;
         for (int i = 0; i < objectsToTrigger.Length; i++)
         {
             objectsToTrigger[i].SetActive(false);
